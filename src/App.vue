@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, computed, onMounted } from "vue";
+import PokedexCard from "./components/PokedexCard.vue";
+
 const filterText = ref("");
 
 const pokemonStore = reactive({
@@ -22,12 +24,12 @@ onMounted(async () => {
   <h1>Twitch Pokedex</h1>
   <input type="text" v-model="filterText" />
   <ul>
-    <li
+    <PokedexCard
       v-for="(pokemon, index) in pokemonStore.filteredList"
       :key="`poke-${index}`"
-    >
-      #{{ pokemon.entry_number }} - {{ pokemon.pokemon_species.name }}
-    </li>
+      :number="pokemon.entry_number"
+      :name="pokemon.pokemon_species.name"
+    />
   </ul>
 </template>
 
