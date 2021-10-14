@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { reactive, ref, computed, onMounted } from "vue";
 import PokedexCard from "./components/PokedexCard.vue";
+import { Pokemon } from "./types";
 
 const filterText = ref("");
 
 const pokemonStore = reactive({
   list: [],
   filteredList: computed(() =>
-    pokemonStore.list.filter((pokemon) =>
+    pokemonStore.list.filter((pokemon: Pokemon) =>
       pokemon.name.includes(filterText.value)
     )
   ),
 });
+
 onMounted(async () => {
   const pokeData = await fetch("/.netlify/functions/pokedex").then((response) =>
     response.json()
