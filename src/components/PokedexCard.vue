@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { computed } from "@vue/reactivity";
+import { Pokemon } from "../types";
 
-interface PokedexCardProps {
-  number: number;
-  name: string;
-}
-
-const props = defineProps<PokedexCardProps>();
+const props = defineProps<{ pokemon: Pokemon }>();
 </script>
 
 <template>
-  <li>{{ number }} - {{ name }}</li>
+  <li>{{ pokemon.id }} - {{ pokemon.name }}</li>
 </template>

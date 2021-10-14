@@ -30,8 +30,7 @@ onMounted(async () => {
     <PokedexCard
       v-for="(pokemon, index) in pokemonStore.filteredList"
       :key="`poke-${index}`"
-      :number="pokemon.id"
-      :name="pokemon.name"
+      :pokemon="pokemon"
     />
   </ul>
 </template>
