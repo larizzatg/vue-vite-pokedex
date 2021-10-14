@@ -1,12 +1,29 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, computed, onMounted } from "vue";
+const pokemonList = ref([]);
+const filterText = ref("");
+
+const filterPokemonList = computed(() => {
+  return pokemonList.value.filter((pokemon) =>
+    pokemon.pokemon_species.name.includes(filterText.value)
+  );
+});
+onMounted(async () => {
+  const pokeData = await fetch("https://pokeapi.co/api/v2/pokedex/2/").then(
+    (response) => response.json()
+  );
+  pokemonList.value = pokeData.pokemon_entries;
+});
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <h1>Twitch Pokedex</h1>
+  <input type="text" v-model="filterText" />
+  <ul>
+    <li v-for="(pokemon, index) in filterPokemonList" :key="`poke-${index}`">
+      #{{ pokemon.entry_number }} - {{ pokemon.pokemon_species.name }}
+    </li>
+  </ul>
 </template>
 
 <style>
